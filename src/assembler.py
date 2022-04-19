@@ -32,6 +32,16 @@ operators_nothing = {
     "CLF": "01100000"
 }
 
+operators_special = {
+    "IN": "01110",
+    "OUT": "01111"
+}
+
+operators_special_type = {
+    'data': '0',
+    'address': '1'
+}
+
 registers = {
     "R0": "00",
     "R1": "01",
@@ -94,6 +104,8 @@ class Assembly:
             return 'ADDR', operators_addr[operator]
         if(operator in operators_nothing.keys()):
             return 'NOTHING', operators_nothing[operator]
+        if(operator in operators_special.keys()):
+            return 'SPECIAL', operators_special[operator]
         if(operator[-1] == ':'):
             return 'LABEL', None
         raise Exception('Operando inválido')
@@ -120,6 +132,13 @@ class Assembly:
             operator, operands = words[0], words[1]
 
         op_category, op_code = self.__get_operator_data__(operator)
+
+        if(op_category == 'SPECIAL'):
+            op_type, rb = operands.split(',')
+            bin_code = op_code + \
+                operators_special_type[op_type]+self.__get_register_code__(rb)
+            hex_code = f'{int(bin_code,2):X}'
+            return [hex_code.zfill(2)]
 
         if(op_category == "RA_RB"):
             ra, rb = operands.split(',')

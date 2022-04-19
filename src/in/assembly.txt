@@ -3,6 +3,7 @@ DATA R1,0x50      # 21 50  inicio dos valores
 leitura: # dec=2 hex = 2
 DATA R2,0x01      # 22 01 contador 
 DATA R0,0x64      # 20 64 endereco do teclado
+OUT address,R0  ; 7c
 
 XOR R0,R0       # e0
 CMP R0,R3       # f3    compara se ainda tem coisa pra ler 
