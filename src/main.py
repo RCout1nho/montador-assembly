@@ -10,8 +10,13 @@ filename_out = sys.argv[2]
 file = open(filename_in, 'r')
 lines = file.readlines()
 
-# instance of Assembly class
-instructions = assembler.Assembly(lines)
+try:
+    # instance of Assembly class
+    instructions = assembler.Assembly(lines)
 
-# generate logisim RAM code file
-logisim.generate_logisim_ram_code(instructions.get_hex_code(), filename_out)
+    # generate logisim RAM code file
+    logisim.generate_logisim_ram_code(
+        instructions.get_hex_code(), filename_out)
+except Exception as e:
+    print('Aconteceu um erro:')
+    print(e)

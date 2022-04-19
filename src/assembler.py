@@ -120,6 +120,8 @@ class Assembly:
     # @returns `label_line`
     # `label_line` is the line where is the label
     def __get_label_line__(self, label):
+        if(label not in self.__labels.keys()):
+            raise Exception(f'O rótulo "{label}" não existe')
         return self.__labels[label]
 
     def __get_complement_2__(self, decimal):
@@ -142,8 +144,11 @@ class Assembly:
 
         if(op_category == 'SPECIAL'):
             op_type, rb = operands.split(',')
+            if(op_type not in operators_special_type.keys()):
+                raise Exception('Tipo de operação IN/OUT inválida')
             bin_code = op_code + \
-                operators_special_type[op_type]+self.__get_register_code__(rb)
+                operators_special_type[op_type] + \
+                self.__get_register_code__(rb)
             hex_code = f'{int(bin_code,2):X}'
             return [hex_code.zfill(2)]
 
