@@ -122,7 +122,14 @@ class Assembly:
     def __get_label_line__(self, label):
         return self.__labels[label]
 
+    def __get_complement_2__(self, decimal):
+        mask = (1 << 8) - 1
+        complement = bin(~(decimal ^ mask))
+        bin_code = format(int(complement, 2), 'b').zfill(8)
+        return bin_code
+
     # @returns `hex_code`
+
     def __get_hex_code__(self, line):
         words = line.split()
 
@@ -156,9 +163,14 @@ class Assembly:
             if(addr[0:2] == "0x"):
                 addr_base = 16
 
+            if(addr[0] == '-'):
+                new_addr = self.__get_complement_2__(
+                    int(addr, addr_base)).zfill(8)
+            else:
+                new_addr = format(int(addr, addr_base), 'b').zfill(8)
             bin_code = op_code + "00" +\
                 self.__get_register_code__(
-                    rb) + format(int(addr, addr_base), 'b').zfill(8)
+                    rb) + new_addr
 
             hex_code = f'{int(bin_code,2):X}'
             return [hex_code[0:2], hex_code[2:]]
