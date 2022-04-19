@@ -39,7 +39,7 @@ operators_special = {
 
 operators_special_type = {
     'data': '0',
-    'address': '1'
+    'addr': '1'
 }
 
 registers = {

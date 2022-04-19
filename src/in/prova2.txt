@@ -1,0 +1,35 @@
+DATA R0,0x64 // 20 64
+OUT addr,R0 // 7c
+DATA R0,0x70 // 20 70
+DATA R1,0xff // 21 ff
+childe:
+IN data,R3 // 73
+XOR R2,R2 // ea
+CLF // 60
+CMP R2,R3 // fb
+JE xiao // 52 16
+CLF // 60
+ADD R1,R0 // 84
+DATA R2,0xE0 // 22 e0
+CLF // 60
+ADD R2,R3 // 8b
+ST R0,R3 // 13
+JMP childe // 40 07
+xiao:
+OUT addr,R2 // 7e
+DATA R1,0x61 // 21 61
+OUT addr,R1 // 7d
+DATA R1,0x01 // 21 01
+diluc:
+LD R0,R3 // 03
+CLF // 60
+CMP R2,R3 // fb
+JE zhongli // 52 25
+OUT data,R3 // 7b
+ADD R1,R0 // 84
+JMP diluc // 40 1c
+zhongli:
+XOR R0,R0 // e0
+OUT addr,R0 // 7c
+loop:
+JMP loop // 40 27
