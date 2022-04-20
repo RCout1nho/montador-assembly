@@ -94,7 +94,6 @@ class Assembly:
     # @returns `operator_category`, `operator_bin_code`
     # `operator_category` should be one of this: ['RA_RB', 'RA_ADDR', 'ADDR', 'NOTHING']
     # `operator_bin_code` should be a 4-bit binary code
-
     def __get_operator_data__(self, operator):
         if(operator in operators_ra_rb.keys()):
             return 'RA_RB', operators_ra_rb[operator]
@@ -124,6 +123,7 @@ class Assembly:
             raise Exception(f'O rótulo "{label}" não existe')
         return self.__labels[label]
 
+    # @returns `bin_code`
     def __get_complement_2__(self, decimal):
         mask = (1 << 8) - 1
         complement = bin(~(decimal ^ mask))
@@ -131,7 +131,6 @@ class Assembly:
         return bin_code
 
     # @returns `hex_code`
-
     def __get_hex_code__(self, line):
         words = line.split()
 
